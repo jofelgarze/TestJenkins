@@ -5,7 +5,6 @@
  */
 package com.jofelgarze.testentites;
 
-import com.jofelgarze.testentites.orm.Persona;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
