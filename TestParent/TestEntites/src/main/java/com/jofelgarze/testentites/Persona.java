@@ -6,6 +6,7 @@
 package com.jofelgarze.testentites;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -37,8 +39,8 @@ public class Persona implements Serializable {
     @Column(name = "apellido", length = 100)
     private String apellido;
     
-    @ManyToOne
-    private Direccion direccion;
+    @OneToMany(mappedBy = "personaId")
+    private List<Direccion> direcciones;
     
     public int getCodigo() {
         return codigo;
@@ -64,12 +66,12 @@ public class Persona implements Serializable {
         this.apellido = apellido;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
+    public List<Direccion> getDirecciones() {
+        return direcciones;
     }
 
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
+    public void setDirecciones(List<Direccion> direcciones) {
+        this.direcciones = direcciones;
+    }   
     
 }
