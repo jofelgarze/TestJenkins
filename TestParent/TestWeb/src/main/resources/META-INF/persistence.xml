@@ -3,6 +3,7 @@
   <persistence-unit name="puSakila" transaction-type="JTA">
     <jta-data-source>java:/Datasource/SakilaDS</jta-data-source>
     <class>com.jofelgarze.testentites.Persona</class>
+    <class>com.jofelgarze.testentites.Direccion</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
