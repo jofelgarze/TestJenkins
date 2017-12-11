@@ -8,7 +8,6 @@ package com.jofelgarze.testweb.rest;
 import com.jofelgarze.testentites.Persona;
 import com.jofelgarze.testweb.bean.PersonaBean;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
