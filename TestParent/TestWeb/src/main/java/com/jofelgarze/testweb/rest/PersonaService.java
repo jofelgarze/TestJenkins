@@ -7,6 +7,7 @@ package com.jofelgarze.testweb.rest;
 
 import com.jofelgarze.testentites.Persona;
 import com.jofelgarze.testweb.bean.PersonaBean;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,7 +22,6 @@ import javax.ws.rs.core.Response;
  *
  * @author Josue
  */
-@Stateless
 @Path("/persona")
 public class PersonaService {
     
@@ -31,7 +31,8 @@ public class PersonaService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks() {
-            return Response.ok(personaBean.findAll()).build();
+        List<Persona> lista = personaBean.findAll();
+        return Response.ok(lista).build();
     }
 
     @POST

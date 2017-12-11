@@ -5,7 +5,9 @@
  */
 package com.jofelgarze.testentites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,42 +15,56 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Josue
  */
-@Entity(name = "direccion")
+@Entity
+@Table(name = "direccion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d")
+    , @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id")
+    , @NamedQuery(name = "Direccion.findByDireccion", query = "SELECT d FROM Direccion d WHERE d.direccion = :direccion")
+    , @NamedQuery(name = "Direccion.findByTelefono", query = "SELECT d FROM Direccion d WHERE d.telefono = :telefono")})
 public class Direccion implements Serializable {
-    
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
+    @Basic(optional = false)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+    @Size(max = 200)
+    @Column(name = "direccion", length = 200)
+    private String direccion;
+    @Size(max = 15)
+    @Column(name = "telefono", length = 15)
+    private String telefono;
     @JoinColumn(name = "persona_id", referencedColumnName = "codigo")
     @ManyToOne
-    private Persona persona;
-    
-    @Column(length = 200)
-    private String direccion;
-    
-    @Column(length = 15)
-    private String telefono;
+    @JsonIgnore
+    private Persona personaId;
 
-    public int getId() {
-        return id;
+    public Direccion() {
     }
 
-    public void setId(int id) {
+    public Direccion(Integer id) {
         this.id = id;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDireccion() {
@@ -66,6 +82,38 @@ public class Direccion implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Direccion)) {
+            return false;
+        }
+        Direccion other = (Direccion) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.jofelgarze.testentites.Direccion[ id=" + id + " ]";
+    }
     
 }

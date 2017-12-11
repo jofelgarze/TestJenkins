@@ -10,19 +10,24 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  *
  * @author Josue
  */
 @Stateless
+@Transactional(Transactional.TxType.SUPPORTS)
 public class PersonaBean {
     
     @PersistenceContext
     private EntityManager em;
 
     public List<Persona> findAll() {
-        return em.createNamedQuery(Persona.Query.FIND_ALL, Persona.class).getResultList();
+        List<Persona> lista = 
+            em.createNamedQuery(Persona.Query.FIND_ALL, Persona.class)
+                .getResultList();
+        return lista;
     }
 
     public void create(final Persona persona) {
