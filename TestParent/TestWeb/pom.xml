@@ -12,7 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mysql.version>5.1.33</mysql.version>
+        <mysql.version>5.1.44</mysql.version>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <liquibase.version>3.5.3</liquibase.version>
@@ -55,6 +55,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <!-- Replace with the version of the MySQL driver you want to use -->
             <version>${mysql.version}</version>
+            <scope>provided</scope>
         </dependency>      
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -70,6 +71,14 @@
 
     <profiles>        
         <profile>
+            <properties>
+                <hostname>localhost</hostname>
+                <port>10990</port>
+                <username>admin</username>
+                <password>admin</password>
+                <filename>test-web.war</filename>
+                <!--${basedir}/target/webapp.war-->
+            </properties>
             <id>development</id>
             <build>
                 <finalName>test-web</finalName>
@@ -78,6 +87,42 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <version>1.0.2.Final</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                            <!--<execution>
+                                <id>copy-war</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>redeploy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>${project.packaging}</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>C:\JAVA\wildfly\standalone\deployments</outputDirectory>
+                                            <destFileName>${project.build.finalName}.${project.packaging}</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>-->
+                        </executions>
+                        <configuration>
+                            <force>true</force>
+                            <hostname>${hostname}</hostname>
+                            <port>${port}</port>
+                            <username>${username}</username>
+                            <password>${password}</password>
+                            <filename>${filename}</filename>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

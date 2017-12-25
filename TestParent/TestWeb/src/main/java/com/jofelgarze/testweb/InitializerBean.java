@@ -36,7 +36,7 @@ public class InitializerBean {
     private static final String STAGE = "";
     private static final String CHANGELOG_FILE = "liquibase/changelog/db.changelog-master.xml";
 
-    @Resource(lookup = "java:/Datasource/SakilaDS")
+    @Resource(lookup = "java:/Datasources/SakilaDS")
     private DataSource ds;
 
     @PostConstruct
